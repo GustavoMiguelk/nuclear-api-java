@@ -32,6 +32,11 @@ public class ConteudoController {
         return service.listar(categoria);
     }
 
+    @GetMapping("/busca")
+    public List<ConteudoResponse> buscar(@RequestParam String texto) {
+        return service.buscarPorTexto(texto);
+    }
+
     @GetMapping("/{id}")
     public ConteudoResponse buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id);

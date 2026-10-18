@@ -32,6 +32,13 @@ public class ConteudoService {
         return ConteudoResponse.de(obter(id));
     }
 
+    @Transactional(readOnly = true)
+    public List<ConteudoResponse> buscarPorTexto(String texto) {
+        return repository
+                .findByTituloContainingIgnoreCaseOrDescricaoContainingIgnoreCase(texto, texto)
+                .stream().map(ConteudoResponse::de).toList();
+    }
+
     @Transactional
     public ConteudoResponse criar(ConteudoRequest req) {
         Conteudo c = new Conteudo();
