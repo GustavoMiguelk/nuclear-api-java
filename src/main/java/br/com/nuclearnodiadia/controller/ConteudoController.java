@@ -4,6 +4,7 @@ import br.com.nuclearnodiadia.dto.ConteudoRequest;
 import br.com.nuclearnodiadia.dto.ConteudoResponse;
 import br.com.nuclearnodiadia.model.Categoria;
 import br.com.nuclearnodiadia.service.ConteudoService;
+import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -43,14 +44,15 @@ public class ConteudoController {
     }
 
     @PostMapping
-    public ResponseEntity<ConteudoResponse> criar(@RequestBody ConteudoRequest req) {
+    public ResponseEntity<ConteudoResponse> criar(@Valid @RequestBody ConteudoRequest req) {
         ConteudoResponse criado = service.criar(req);
         URI location = URI.create("/api/conteudos/" + criado.id());
         return ResponseEntity.created(location).body(criado);
     }
 
     @PutMapping("/{id}")
-    public ConteudoResponse atualizar(@PathVariable Long id, @RequestBody ConteudoRequest req) {
+    public ConteudoResponse atualizar(@PathVariable Long id,
+                                      @Valid @RequestBody ConteudoRequest req) {
         return service.atualizar(id, req);
     }
 
